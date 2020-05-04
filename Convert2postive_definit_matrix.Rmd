@@ -1,0 +1,85 @@
+---
+title: "Convert a (co)variance Matrix to the nearest positive definite matrix"
+author: "Rostam Abdollahi-Arpanahi"
+date: "2020-05-4"
+output: html_document
+---
+
+
+```{r}
+
+rm(list=ls())
+library(Matrix)
+```
+## Genetic variance_Covariance matrix
+```{r}
+cov_gen <- matrix(c(12683.3,	24.44,	50.68,	106.76,	5.43,
+24.44,	2.8,	-0.98,	-1.53,	-0.14,
+50.68,	-0.98,	1,	-0.17,	-0.086,
+106.76,	-1.53,	-0.17,	2.5,	0.02,
+5.43,	-0.14,	-0.086,	0.02,	0.045),nrow=5,byrow=T)
+
+cov_gen
+```
+
+Check for positive difinity
+```{r}
+det(cov_gen)
+eigen(cov_gen)
+```
+If the determinants is equal to zero or one of the eigenvalues of matrix is negative, it shows the correlation or variance-covariance matrix is not invertable.
+
+### Convert to the nearest positive definite matrix using Matrix package in R
+
+```{r}
+gg <- nearPD(cov_gen)
+
+cov_gen <- gg$mat
+cov_gen
+```
+
+Well, lets check out the new matrix
+
+```{r}
+det(cov_gen)
+eigen(cov_gen)
+```
+
+As it can be seen, the determinants is larger than zero and no longer any of the eigenvalue of matrix is negative.
+
+## Varinace_Covariance of residual effects:
+```{r}
+cov_Env <- matrix(c(21596.7,	-24.44,	-33.58,	-28.74,	15.3,
+-24.44,	90.40,	-2.14,	46.26,	0.02,
+-33.58,	-2.14,	4.30,	0.20,	0.02,
+-28.74,	46.26,	0.20,	33.80,	-0.08,
+15.30,	0.02,	0.02,	-0.08,	0.06),nrow=5,byrow=T)
+
+cov_Env
+```
+
+Check for positive difinity
+```{r}
+det(cov_Env)
+eigen(cov_Env)
+```
+Since the determinants is larger than zero and none of eigenvalues is lower than zero, so the matrix is positive definite and invertable. Hence, if we apply nearPD function of this matrix, nothing happens and we will get the original matrix.
+
+### Conver to the nearest positive definite matrix:
+```{r}
+ee <- nearPD(cov_Env)
+
+cov_Env <- ee$mat
+cov_Env
+```
+
+Check out the new matrix
+
+```{r}
+det(cov_Env)
+eigen(cov_Env)
+col(cov_Env)
+```
+
+
+
