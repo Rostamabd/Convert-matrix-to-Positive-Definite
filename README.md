@@ -11,6 +11,7 @@ In the multi-variate analysis, it is required that starting values for the (co)v
 In oder to convert a (co)variance matrix to the nearest positive definite matrix, a package called Matrix must be installed and loaded.
 
 ```
+> git clone https://github.com/Rostamabd/Convert-matrix-to-Positive-Definite.git
 > module load R
 > R
 > install.packages("Matrix")
